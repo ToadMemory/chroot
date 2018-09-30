@@ -1,0 +1,12 @@
+#!/bin/bash 
+echo "			此shell脚本作用：
+查看全网段ip是否正常 查看网段内的机器那个在开机使用"
+read -p "please input as if 192.168.1": value
+for i in {1..254}
+do 
+ping -n -c2 -i0.5 $value.$i > /dev/null
+if [ $? -eq 0 ];then
+echo $value.$i
+fi
+continue
+done
