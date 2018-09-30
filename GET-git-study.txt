@@ -1,0 +1,52 @@
+Centos7.4
+------------------------------------------------------------------------------
+<1>本地下载github上的内容
+
+	装包git
+	#git clone git://ToadMemory/chroot
+			or 
+	#git clone http://github.com/ToadMemory/chroot
+
+<2>本地内容上传到github
+	#cd  chroot      --下载目录不再此目录不能上传内容
+	#cp/mv 本地目录/文件 .   --拷贝上传内容到chroot目录下，注：不在此目录下不能上传
+	#git add  上传目录/文件     
+	#git commit -m "chroot"   --"chroot"是github网站"存储库"名
+	#git push 
+	--------------------------------------------------------
+	--------->输入github申请帐号名
+	--------->输入giyhub申请的登陆密码
+<3>顺利上传
+
+
+
+git上传是易出错
+
+<1>一定要进入git pull 下载目录下 在其他目录或/下均不可以git push
+<2>git commit -m "_______"     --"_____"这里的内容为github网站上自建的"存储库"名<3>git config  --globle user.email "your email-address"  
+   git config  --globle user.name "your github-name"    --此处在git push操作后需要认证身份 一般在新机器第一次上传时需要
+<4>git安装版本较低出错              --升级安装即可rpm -ivh/yum源 升级 git软件
+<5>上传目录在github网站上不可点击浏览，文件可以 （了解不够深 暂定为错误）
+
+
+简易脚本快速上传
+#vim /usr/local/gitgx   --"gitgx" shell脚本文件 名字自取
+------------------------------------------------------
+#！/bin/bash
+git add $1
+git commit -m "chroot"
+git push 
+------------------------------------------------------
+or
+------------------------------------------------------
+将"chroot" 也换成变量 
+
+
+脚本调用 
+gitgx  $1 
+
+
+
+
+
+                                                          <见解一般，帮助一下>

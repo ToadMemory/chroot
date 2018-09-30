@@ -1,0 +1,30 @@
+Centos7.4
+------------------------------------------------------------------
+进入虚拟机
+virsh console node
+查看磁盘信息
+lsblk
+查看系统/root下内容
+ls                  --新建的机器一般没有内容在这一步
+		    --没扩容之前被传包等操作后发现磁盘容量不足（一般报错才		      会发现）
+关闭新建node虚拟机
+shutdown now
+真实机器：
+
+--执行如下操作
+cd /etc/libvirt/qemu/
+sed 's/模版XML名/node/'  模版XML名.xml > node.xml      --更新虚拟硬件信息
+virsh start node                         --无需再次定义（define）直接启动
+virsh console node                       --使用virsh进入虚拟机
+--开始扩容操作
+lsblk 		--查看要扩容的盘符
+growpart /dev/vda 1   --这里用vda示范
+xfs_grow /           --根据磁盘格式化类型，扩容文件系统大小
+
+                                                      
+
+
+
+
+
+                                                      <见解一般，帮助一下>
