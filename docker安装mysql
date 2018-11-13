@@ -1,0 +1,54 @@
+#安装docker
+yum -y install docker
+systemctl start docker
+systemctl enable docker
+#下载docker内mysql镜像
+docker search mysql
+docker pull mysql/mysql-server
+#挂在volume资料卷 创建mysql环境
+cd docker;mkdir mysql ;cd mysql
+mkdir config ; mkdir db ;cd config;vim my.cnf
+[mysqld]
+user=mysql
+skip-grant-tables #跳过mysql登陆验证
+#
+docker run -d -p3306:3306 --name 数据库名 -v=/docker/mysql/config/my.cnf:/etc/my.cnf -v=/docker/mysql/data:/var/lib/mysql mysql/mysql-server
+docker ps -a 
+docker logs 数据库名   #查找登陆密码 已经设置跳过 无需这步
+#进入容器
+docker exec -it 数据库名 bash
+
+#登陆mysql改密码
+1,没有跳过登陆验证
+mysql -uroot -p 初始密码
+set password for 'root'@'localhost' identified by '新密码'；
+2，跳过验证
+mysql
+alter user 'root'@'localhost' identified by '新密码'；
+
+#创建用户及授权
+create user '新用户'@'localhost'identified by'密码'；
+grant all privileges on *.* to '用户名'@'localhost' with grant option；
+create user '新用户'@'%'identified by'密码'；
+grant all privileges on *.* to '用户名'@'%' with grant option；
+
+#查看修改
+show variables like '%char%';
+
+#修改配置文件
+vim /docker/mysql/config/my.cnf 
+ #skip-grant-tables 注释这行
+[mysqld]
+user=mysql
+character-set-server =utf8
+[client]
+default-character-set=utf8
+[mysql]
+default-character-set=utf8
+
+#使用docker重新启动mysql 服务
+docker stop mysql库名（自建的）
+docker start mysql库名（自建的）
+
+
+
