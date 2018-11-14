@@ -1,0 +1,35 @@
+1/ 最小化安装系统
+###服务越多漏洞越多
+~~~~~~新机必备操作～～～～
+2/ 更新yum源    #解决安装包下载速度
+3/ 关闭或更新部分服务  #ex：ntp服务更改为chrony；关闭则需要根据业务需求
+4/ 关闭不需要的TTY终端   
+      /etc/init/start-ttys.conf  修改env ACTIVE_CONSOLES=/dev/tty[1-2]
+      /etc/sysconfig/init  修改ACTIVE_CONSOLES=/dev/tty[1-6]
+      重新启动
+5/ 对TCP/IP网络参数调整
+echo 'net.ipv4.tcp_syncookies = 1' >>/etc/sysctl.conf
+sysctl -p  #无需重新启动操作
+6 /修改SHELL命令的history记录数
+/etc/profile   HISTSIZE=1000   #此部操作因情况而定
+source /etc/profile     #无需重新启动操作
+7 /校正时间同步并写入时间服务器
+crontab -e [-u root] #[默认值]
+*/5**** /usr/sbin/ntpdate ntp.api.bz >> /dev/null 2>&1
+8 /停止IPV6网络服务   #在搭建lvs服务时运行ipvsadm是会报错
+9 /启动网卡
+10 /关闭写磁盘I/O功能
+11 /修改ssh登陆配置并做至少一个具有sudo权限的用户
+/etc/ssh/sshd_config
+禁止root远程登陆
+禁止空密码登陆
+关闭ssh反向查询，加快ssh访问速度
+
+visudo
+创建用户修改visudo文件
+如果sudo时不想输入密码
+wxh ALL=（all） NOPASSWD：ALL
+
+
+
+
